@@ -9,7 +9,7 @@ pressed keys) and key sequences (keys pressed in succession).
 Usage
 =====
 
-::
+.. code-block:: python
 
    from pyzmo import *
    from evdev.ecodes import *
@@ -47,7 +47,7 @@ Usage
        pass
 
    # each handler receives the list of input events, because of
-   # which it was triggered 
+   # which it was triggered
    @chord(e.KEY_LEFTMETA, e.KEY_A)
    def term(events):
        for event in events:
@@ -83,7 +83,9 @@ Usage
    poll(dev)
 
 
-You can avoid polluting the global namespace with::
+You can avoid polluting the global namespace with:
+
+.. code-block:: python
 
    from pyzmo import EventHandler
    from evdev import ecodes as e

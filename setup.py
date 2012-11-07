@@ -18,14 +18,14 @@ classifiers = (
     'Programming Language :: Python :: 3.3',
     'License :: OSI Approved :: BSD License',
     'Intended Audience :: Developers',
-    'Operating System :: Linux',
+    'Operating System :: POSIX :: Linux',
 )
 
 kw = {
     'name'                 : 'pyzmo',
     'version'              : '0.1.0',
 
-    'description'          : 'hotkey library based on python-evdev',
+    'description'          : 'tiny hotkey library based on python-evdev',
     'long_description'     : open(join(here, 'README.rst')).read(),
 
     'author'               : 'Georgi Valkov',

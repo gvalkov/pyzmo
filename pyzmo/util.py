@@ -2,7 +2,7 @@ from evdev import ecodes as e
 
 
 def maketuple(arg):
-    if len(arg) and isinstance(arg[0], tuple):
+    if len(arg) and isinstance(arg[0], (tuple, list)):
         return tuple(arg)
     else:
         return (arg,)
@@ -28,5 +28,21 @@ def describe_triggers(triggers):
         for n,i in enumerate(trigger):
             indent = '+%s' % ' '*(n+1) if n==0 else ' '*(n+2)
             yield '%s%s' % (indent, _fmt_event(i))
-        
+
         yield '%s func %s() at %s\n' % (' '*(n+2), func[0].__name__, id(func[0]))
+
+
+# used by the hy dsl
+def get_ecode(ecode):
+    if not ecode.startswith('KEY'):
+        ecode = 'KEY_%s' % ecode
+    try:
+        return ecode, getattr(e, ecode)
+    except AttributeError:
+        return ecode, None
+
+def create_decorator(decorator, ecodes, options):
+    return decorator(ecodes, **options)
+
+makelist = lambda x: x if isinstance(x, list) else [x]
+last = lambda x: x[-1]

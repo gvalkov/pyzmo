@@ -12,6 +12,8 @@ var
 sdist
 develop-eggs
 .installed.cfg
+__pycache__/
+doc/_build
 
 # Installer logs
 pip-log.txt

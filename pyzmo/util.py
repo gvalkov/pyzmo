@@ -1,3 +1,4 @@
+from sys import exit
 from evdev import ecodes as e
 
 
@@ -37,9 +38,16 @@ def get_ecode(ecode):
     if not ecode.startswith('KEY'):
         ecode = 'KEY_%s' % ecode
     try:
-        return ecode, getattr(e, ecode)
+        return getattr(e, ecode)
     except AttributeError:
-        return ecode, None
+        return None
+
+def get_ecode_or_fail(name):
+    ecode = get_ecode(name)
+    if ecode is None:
+        return 'error: unknown key "{}"'.format(name)
+        exit(1)
+    return ecode
 
 def create_decorator(decorator, ecodes, options):
     return decorator(ecodes, **options)

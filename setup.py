@@ -6,8 +6,6 @@ from setuptools import setup
 
 
 here = abspath(dirname(__file__))
-requires = ('evdev',)
-#test_requires = ('pytest',)
 
 classifiers = (
     'Development Status :: 3 - Alpha',
@@ -24,21 +22,18 @@ classifiers = (
 kw = {
     'name'                 : 'pyzmo',
     'version'              : '0.1.0',
-
     'description'          : 'tiny hotkey library based on python-evdev',
     'long_description'     : open(join(here, 'README.rst')).read(),
-
     'author'               : 'Georgi Valkov',
     'author_email'         : 'georgi.t.valkov@gmail.com',
-    'license'              : 'New BSD License',
+    'license'              : 'Revised BSD License',
     'url'                  : 'https://github.com/gvalkov/pyzmo',
-
     'keywords'             : 'evdev hotkey',
     'classifiers'          : classifiers,
-
     'packages'             : ['pyzmo'],
-    'install_requires'     : requires,
+    'install_requires'     : ['evdev', 'hy'],
     'zip_safe'             : True,
 }
 
-setup(**kw)
+if __name__ == '__main__':
+    setup(**kw)

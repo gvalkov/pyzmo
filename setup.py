@@ -31,6 +31,7 @@ kw = {
     'keywords'             : 'evdev hotkey',
     'classifiers'          : classifiers,
     'packages'             : ['pyzmo'],
+    'package_data'         : {'pyzmo': ['*.hy']},
     'install_requires'     : ['evdev', 'hy'],
     'zip_safe'             : True,
 }

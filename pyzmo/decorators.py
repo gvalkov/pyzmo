@@ -26,6 +26,7 @@ class Decorator:
             self.triggers[seq] = (func, self.options)
         return func
 
+
 class EventDecorator(Decorator):
     '''
     Arbitrary input event decorator. Example:
@@ -33,13 +34,14 @@ class EventDecorator(Decorator):
         @event(EV_REL, REL_WHEEL, -1)
         @event((EV_REL, REL_WHEEL, 1), (EV_REL, REL_HWHEEL, 1))
 
-    The latter is used to specify multiple events for a single
+    The latter form is used to specify multiple events for a single
     callback (not a sequence of events).
     '''
 
     def create_event_sequence(self, events):
         for ev in maketuple(events):
             yield (ev,)
+
 
 class KeyDecorator(Decorator):
     '''
@@ -49,8 +51,8 @@ class KeyDecorator(Decorator):
         @key(KEY_B, KEY_C)
         @key(KEY_D, states=('up', 'down', 'hold'))
 
-    By default callbacks will be triggered once the key is
-    pressed (value 1). The ``states`` options 
+    The ``states`` option may be used to set when a callback should be
+    triggered. By default, this happens when the key is pressed (value 1).
     '''
     def create_event_sequence(self, keys):
         states = self.options.get('states', ['down'])
@@ -59,16 +61,17 @@ class KeyDecorator(Decorator):
             for key in pair:
                 raise_on_unknown_key(key)
                 for state in states:
-                    val = {'up':0, 'down':1, 'hold':2}[state]
+                    val = {'up': 0, 'down': 1, 'hold': 2}[state]
                     ev = [(e.EV_KEY, key, val)]
                     yield tuple(ev)
+
 
 class ChordDecorator(Decorator):
     '''
     A combination of keys, pressed simultaneously. Example:
 
-        @chord(KEY_LEFTCTRL, KEY_LEFTALT, KEY_DELETE)
-        @chord((KEY_LEFTCTRL, KEY_C), (KEY_LEFTCTRL, KEY_X))
+      @chord(KEY_LEFTCTRL, KEY_LEFTALT, KEY_DELETE)
+      @chord((KEY_LEFTCTRL, KEY_C), (KEY_LEFTCTRL, KEY_X))
     '''
     def create_event_sequence(self, keys):
         for pair in maketuple(keys):
@@ -80,12 +83,13 @@ class ChordDecorator(Decorator):
 
             yield tuple(seq)
 
+
 class SequenceDecorator(Decorator):
     '''
     A sequence of keys, pressed one after the other. Example:
 
-        @keyseq(KEY_Q, KEY_W, KEY_E)
-        @keyseq((KEY_A, KEY_B, KEY_C), (KEY_1, KEY_2, KEY_3))
+      @keyseq(KEY_Q, KEY_W, KEY_E)
+      @keyseq((KEY_A, KEY_B, KEY_C), (KEY_1, KEY_2, KEY_3))
     '''
     def create_event_sequence(self, keys):
         for pair in maketuple(keys):

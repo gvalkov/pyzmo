@@ -11,11 +11,11 @@ def raise_on_unknown_key(key):
     if key not in e.keys:
         msg = 'Unknown KEY or BTN event code passed to decorator: {}'
         raise ValueError(msg.format(key))
-    
+
 def describe_triggers(triggers):
     '''Verbosely describe a trigger dictionary.'''
 
-    keystate = {0:'up', 1:'down', 2:'hold'}
+    keystate = {0: 'up', 1: 'down', 2: 'hold'}
 
     def _fmt_event(ev):
         if ev[0] == e.EV_KEY:
@@ -25,7 +25,7 @@ def describe_triggers(triggers):
             return 'event {} {} {}'.format(e.EV[ev[0]], ev[1], ev[2])
 
     for trigger, func in triggers.items():
-        for n,i in enumerate(trigger):
+        for n, i in enumerate(trigger):
             indent = '+%s' % ' '*(n+1) if n==0 else ' '*(n+2)
             yield '%s%s' % (indent, _fmt_event(i))
 

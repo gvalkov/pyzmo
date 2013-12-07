@@ -8,6 +8,7 @@ from evdev import InputDevice
 from pyzmo import decorators, util
 
 
+logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger('handler')
 
 
@@ -16,7 +17,7 @@ class EventHandler:
         self.name = name
 
         #: mapping of event sequences to (callback, options)
-        #: ex: { ((EV_KEY, KEY_1, 1), (EV_KEY, KEY_2, 1)) : (callback, {'quick' : True}) }
+        #: ex: { ((EV_KEY, KEY_1, 1), (EV_KEY, KEY_2, 1)): (callback, {'quick' : True}) }
         self.triggers = OrderedDict()
 
         # event decorators
@@ -77,7 +78,7 @@ class EventHandler:
 
                     if options.get('quick', False):
                         break
-                    
+
                     continue
 
     def poll(self, *fns):
@@ -85,7 +86,7 @@ class EventHandler:
 
         makedev = lambda x: x if isinstance(x, InputDevice) else InputDevice(x)
         devices = map(makedev, fns)
-        devices = {dev.fd : dev for dev in devices}
+        devices = {dev.fd: dev for dev in devices}
 
         self.create_filters()
         log.debug('Handled event types: %s', self.handled_types)
@@ -99,7 +100,7 @@ class EventHandler:
 
         log.info('Entering main-loop ...')
         while True:
-            r,w,x = select(devices, [], [])
+            r, w, x = select(devices, [], [])
             for fd in r:
                 for ev in self.filter(devices[fd].read()):
                     self.process_event(ev)

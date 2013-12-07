@@ -21,7 +21,7 @@ classifiers = (
 
 kw = {
     'name'                 : 'pyzmo',
-    'version'              : '0.1.0',
+    'version'              : '0.2.0',
     'description'          : 'tiny hotkey library based on python-evdev',
     'long_description'     : open(join(here, 'README.rst')).read(),
     'author'               : 'Georgi Valkov',

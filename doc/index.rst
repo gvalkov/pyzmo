@@ -101,7 +101,7 @@ You can also avoid polluting the global namespace with:
 Usage (Hy)
 ==========
 
-Pyzmo provides a DSL that can be used from Hy_, which is a dialect of
+Pyzmo also has a DSL that can be used from Hy_, which is a dialect of
 lisp that is embedded in Python.
 
 .. code-block:: hy

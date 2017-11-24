@@ -171,5 +171,5 @@ Pyzmo is released under the terms of the `Revised BSD License`_.
 .. _triggerhappy:      https://github.com/wertarbyte/triggerhappy.git
 .. _actkbd:            http://users.softlab.ece.ntua.gr/~thkala/projects/actkbd/
 .. _inputexec:         https://github.com/rbarrois/inputexec
+.. _Hy:                http://docs.hylang.org/en/stable/
 .. _`Revised BSD License`: https://raw.github.com/gvalkov/pyzmo/master/LICENSE
-.. _Hy: http://docs.hylang.org/en/latest/

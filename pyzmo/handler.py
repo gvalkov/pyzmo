@@ -9,7 +9,7 @@ from pyzmo import decorators, util
 
 
 logging.basicConfig(level=logging.DEBUG)
-log = logging.getLogger('handler')
+log = logging.getLogger("handler")
 
 
 class EventHandler:
@@ -21,9 +21,9 @@ class EventHandler:
         self.triggers = OrderedDict()
 
         # event decorators
-        self.event  = partial(decorators.EventDecorator, self.triggers)
-        self.key    = partial(decorators.KeyDecorator, self.triggers)
-        self.chord  = partial(decorators.ChordDecorator, self.triggers)
+        self.event = partial(decorators.EventDecorator, self.triggers)
+        self.key = partial(decorators.KeyDecorator, self.triggers)
+        self.chord = partial(decorators.ChordDecorator, self.triggers)
         self.keyseq = partial(decorators.SequenceDecorator, self.triggers)
 
         self.handled_types = set()  #: event types this handler is interested in
@@ -33,7 +33,7 @@ class EventHandler:
         self.trigger_events = defaultdict(list)
 
     def filter(self, events):
-        '''Filter events that are of no interest to this handler.'''
+        """Filter events that are of no interest to this handler."""
         ht, hc = self.handled_types, self.handled_codes
 
         for ev in events:
@@ -41,15 +41,16 @@ class EventHandler:
                 yield ev
 
     def create_filters(self):
-        '''Populate ``handled_types`` and ``handled_codes``.'''
+        """Populate ``handled_types`` and ``handled_codes``."""
         for trigger in self.triggers:
             for ev in trigger:
-                if callable(ev): break
+                if callable(ev):
+                    break
                 self.handled_types.add(ev[0])
                 self.handled_codes.add(ev[1])
 
     def process_event(self, ev):
-        '''Process a single event.'''
+        """Process a single event."""
         evkey = (ev.type, ev.code, ev.value)
 
         # iterate through all triggers set through @key, @chord etc
@@ -76,29 +77,28 @@ class EventHandler:
                     self.trigger_position[n] = 0
                     del self.trigger_events[n]
 
-                    if options.get('quick', False):
+                    if options.get("quick", False):
                         break
 
                     continue
 
     def poll(self, *fns):
-        '''Read and react to input events.'''
+        """Read and react to input events."""
 
         makedev = lambda x: x if isinstance(x, InputDevice) else InputDevice(x)
         devices = map(makedev, fns)
         devices = {dev.fd: dev for dev in devices}
 
         self.create_filters()
-        log.debug('Handled event types: %s', self.handled_types)
-        log.debug('Handled event codes: %s', self.handled_codes)
+        log.debug("Handled event types: %s", self.handled_types)
+        log.debug("Handled event codes: %s", self.handled_codes)
 
-        log.debug('Registered triggers:\n%s',
-                  '\n'.join(util.describe_triggers(self.triggers)))
+        log.debug("Registered triggers:\n%s", "\n".join(util.describe_triggers(self.triggers)))
 
         for dev in devices.values():
-            log.info('Listening on device: %s', dev)
+            log.info("Listening on device: %s", dev)
 
-        log.info('Entering main-loop ...')
+        log.info("Entering main-loop ...")
         while True:
             r, w, x = select(devices, [], [])
             for fd in r:

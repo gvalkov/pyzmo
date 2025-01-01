@@ -1,0 +1,19 @@
+[project]
+name = "pyzmo"
+version = "1.0.0"
+description = "tiny hotkey library and daemon"
+keywords = ["hotkey", "evdev"]
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.6"
+authors = [{ name="Georgi Valkov", email="georgi.t.valkov@gmail.com" }]
+dependencies = ["evdev"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3",
+  "Operating System :: POSIX :: Linux",
+  "License :: OSI Approved :: BSD License",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/gvalkov/pyzmo"

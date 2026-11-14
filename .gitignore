@@ -13,6 +13,8 @@ sdist
 develop-eggs
 .installed.cfg
 __pycache__/
+.ruff_cache/
+.venv/
 doc/_build
 
 # Installer logs

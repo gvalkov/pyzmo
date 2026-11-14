@@ -128,24 +128,15 @@ lisp that is embedded in Python.
 (poll "/dev/input/eventX" "/dev/input/eventY")
 ```
 
-## Installing
+## Development
 
-The latest stable version of pyzmo is available on pypi, while the
-development version can be installed from github:
-
-``` bash
-$ pip install pyzmo  # latest stable version
-$ pip install git+git://github.com/gvalkov/pyzmo.git  # latest development version
-```
-
-Alternatively, you can install it manually like any other python
-package:
+The project uses [uv] for packaging and dependency management.
 
 ``` bash
-$ git clone git@github.com:gvalkov/pyzmo.git
-$ cd pyzmo
-$ git reset --hard HEAD $versiontag
-$ python setup.py install
+$ uv sync          # create .venv and install all dependencies
+$ uv run example.py # run a script in the environment
+$ uv run ruff check
+$ uv build         # build sdist and wheel into dist/
 ```
 
 ## Similar Projects
@@ -157,6 +148,8 @@ $ python setup.py install
 ## License
 
 Pyzmo is released under the terms of the [Revised BSD License].
+
+[uv]: https://docs.astral.sh/uv/
 
   [python-evdev]: https://github.com/gvalkov/python-evdev.git
   [Hy]: http://docs.hylang.org/en/stable/

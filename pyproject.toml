@@ -4,16 +4,27 @@ version = "1.0.0"
 description = "tiny hotkey library and daemon"
 keywords = ["hotkey", "evdev"]
 readme = "README.md"
-license = {file = "LICENSE"}
-requires-python = ">=3.6"
-authors = [{ name="Georgi Valkov", email="georgi.t.valkov@gmail.com" }]
+license = "BSD-3-Clause"
+requires-python = ">=3.12"
+authors = [{ name = "Georgi Valkov", email = "georgi.t.valkov@gmail.com" }]
 dependencies = ["evdev"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
-  "Programming Language :: Python :: 3",
   "Operating System :: POSIX :: Linux",
-  "License :: OSI Approved :: BSD License",
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/gvalkov/pyzmo"
+Homepage = "https://github.com/gvalkov/pyzmo"
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

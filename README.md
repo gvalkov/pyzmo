@@ -31,15 +31,21 @@ def back(events):
 def c_or_d(events):
     pass
 
-# triggered when KEY_LEFTCTRL, KEY_LEFTALT and KEY_DELETE are
-# pressed at the same time
+# triggered when KEY_DELETE is pressed while KEY_LEFTCTRL and
+# KEY_LEFTALT are held down (in any order)
 @chord(KEY_LEFTCTRL, KEY_LEFTALT, KEY_DELETE)
 def ctrlaltdel(events):
     pass
 
 # triggered when KEY_A, KEY_B and KEY_C are pressed one after the other
+# (pressing any other key starts the sequence over)
 @keyseq(KEY_A, KEY_B, KEY_C)
 def abc(events):
+    pass
+
+# same, but with at most 1 second between key events
+@keyseq(KEY_X, KEY_Y, timeout=1.0)
+def xy(events):
     pass
 
 # specifying multiple sequences for one callback (syntax applies for
@@ -97,6 +103,15 @@ app = EventHandler('name')
 def f(events): pass
 
 @app.poll(...)
+```
+
+Pyzmo logs to the `pyzmo` logger and does not configure logging. To
+see the registered triggers and device messages, enable logging in
+your script:
+
+``` python
+import logging
+logging.basicConfig(level=logging.DEBUG)
 ```
 
 ## Usage (Hy)

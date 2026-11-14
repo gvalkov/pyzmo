@@ -27,12 +27,14 @@ def describe_triggers(triggers):
         else:
             return "event {} {} {}".format(e.EV[ev[0]], ev[1], ev[2])
 
-    for trigger, func in triggers.items():
-        for n, i in enumerate(trigger):
+    for trigger in triggers.values():
+        for n, i in enumerate(trigger.events):
             indent = "+%s" % " " * (n + 1) if n == 0 else " " * (n + 2)
             yield "%s%s" % (indent, _fmt_event(i))
 
-        yield "%s func %s() at %s\n" % (" " * (n + 2), func[0].__name__, id(func[0]))
+        func = trigger.func
+        name = getattr(func, "__name__", repr(func))
+        yield "%s %s %s() at %s\n" % (" " * (n + 2), trigger.kind, name, id(func))
 
 
 # used by the hy dsl

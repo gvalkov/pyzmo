@@ -1,7 +1,7 @@
 import logging
 
 from evdev import ecodes as e
-from pyzmo.util import maketuple, raise_on_unknown_key
+from .util import maketuple, raise_on_unknown_key
 
 log = logging.getLogger("decorator")
 

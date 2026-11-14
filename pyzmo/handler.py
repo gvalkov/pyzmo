@@ -1,3 +1,4 @@
+import os
 import logging
 
 from select import select
@@ -5,11 +6,11 @@ from functools import partial
 from collections import defaultdict, OrderedDict
 
 from evdev import InputDevice
-from pyzmo import decorators, util
+from . import decorators, util
 
 
 logging.basicConfig(level=logging.DEBUG)
-log = logging.getLogger("handler")
+log = logging.getLogger("pyzmo")
 
 
 class EventHandler:
@@ -53,7 +54,7 @@ class EventHandler:
         """Process a single event."""
         evkey = (ev.type, ev.code, ev.value)
 
-        # iterate through all triggers set through @key, @chord etc
+        # iterate through all triggers set through @key, @chord and @keyseq
         for n, key in enumerate(self.triggers):
             # the position within the event sequence for the current trigger
             pos = self.trigger_position[n]
@@ -82,7 +83,7 @@ class EventHandler:
 
                     continue
 
-    def poll(self, *fns):
+    def poll(self, *fns: str | os.PathLike | InputDevice):
         """Read and react to input events."""
 
         makedev = lambda x: x if isinstance(x, InputDevice) else InputDevice(x)
@@ -96,11 +97,11 @@ class EventHandler:
         log.debug("Registered triggers:\n%s", "\n".join(util.describe_triggers(self.triggers)))
 
         for dev in devices.values():
-            log.info("Listening on device: %s", dev)
+            log.info("Listening on %s", dev)
 
         log.info("Entering main-loop ...")
         while True:
-            r, w, x = select(devices, [], [])
+            r, _, _ = select(devices, [], [])
             for fd in r:
                 for ev in self.filter(devices[fd].read()):
                     self.process_event(ev)

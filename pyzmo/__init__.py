@@ -1,5 +1,5 @@
-from pyzmo.handler import EventHandler
 from evdev import ecodes
+from .handler import EventHandler
 
 
 default_handler = EventHandler("default-handler")
